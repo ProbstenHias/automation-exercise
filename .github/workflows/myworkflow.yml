@@ -21,5 +21,17 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.8
+      - name: "Install dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install coverage
       - name: "Run tests"
-        run: python -m unittest
+        run: pytest
+      - name: "Run coverage"
+        run: coverage run -m pytest
+      - name: "Upload coverage artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: .coverage/
